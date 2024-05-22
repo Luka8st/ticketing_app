@@ -1,9 +1,23 @@
-@props(['bg_color' => 'bg-blue-800'])
+@props([
+    'bg_color' => 'bg-blue-800', 'type' => 'submit', 
+    'onclick' => '', 
+    'old_title' => '',
+    'old_description' => '',
+    'old_department' => '',
+    ])
 @php
     $defaults = [
-        'class' => 'rounded py-2 px-6 font-bold'
+        'class' => 'rounded font-bold min-w-40 min-h-12',
     ];
 @endphp
 
-{{-- <button {{ $attributes(['class' => 'bg-blue-800 rounded py-2 px-6 font-bold']) }}>{{ $slot }}</button> --}}
-<button {{ $attributes->merge(['class' => $bg_color . ' ' . $defaults['class']]) }}>{{ $slot }}</button>
+<button {{ $attributes->merge(['class' => $bg_color . ' ' . $defaults['class']]) }} type={{ $type }}
+    onclick="'{{$type}}'=='button' ? discard('{{$old_title}}', '{{$old_description}}', '{{$old_department}}'):void(0)">{{ $slot }} </button>
+
+<script>
+    function discard(oldTitle, oldDescription, oldDepartment) {
+        document.getElementById("title").value = oldTitle
+        document.getElementById("description").value = oldDescription
+        document.getElementById("department").value = oldDepartment
+    }
+</script>
