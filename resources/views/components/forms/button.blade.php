@@ -1,5 +1,7 @@
 @props([
-    'bg_color' => 'bg-blue-800', 'type' => 'submit', 
+    'bg_color' => 'bg-blue-800/60', 
+    'bg_color_hover' => 'bg-blue-800/80', 
+    'type' => 'submit', 
     'onclick' => '', 
     'old_title' => '',
     'old_description' => '',
@@ -11,7 +13,7 @@
     ];
 @endphp
 
-<button {{ $attributes->merge(['class' => $bg_color . ' ' . $defaults['class']]) }} type={{ $type }}
+<button {{ $attributes->merge(['class' => $bg_color . ' hover:' . $bg_color_hover . ' ' . $defaults['class']]) }} type={{ $type }}
     onclick="'{{$type}}'=='button' ? discard('{{$old_title}}', '{{$old_description}}', '{{$old_department}}'):void(0)">{{ $slot }} </button>
 
 <script>
