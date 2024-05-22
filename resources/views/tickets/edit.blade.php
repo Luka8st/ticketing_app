@@ -11,7 +11,12 @@
 
         <x-forms.select label="Department" name="department" id="department" value="{{ $ticket->department->name }}">
             @foreach ($departments as $department)
-                <option class="text-black">{{ $department->name }}</option>
+                @if ($department == $ticket->department)
+                    <option class="text-black" selected>{{ $department->name }}</option>
+                @else
+                    <option class="text-black">{{ $department->name }}</option>
+                @endif
+                
             @endforeach
         </x-forms.select>
 
