@@ -16,14 +16,14 @@
         </x-forms.select>
 
         <div class="flex justify-between ">
-            <x-forms.button bg_color="bg-green-600/60" bg_color_hover="bg-green-600/80">Update ticket</x-forms.button>
+            <x-forms.button bg_color="bg-green-600/60" bg_color_hover="hover:bg-green-600/80">Update ticket</x-forms.button>
             <x-forms.button 
                 type="button" 
                 old_title="{{ $ticket->title }}" 
                 old_description="{{ $ticket->description }}"
                 old_department="{{ $ticket->department->name }}"
                 bg_color="bg-gray-100/20"
-                bg_color_hover="bg-gray-800/80">
+                bg_color_hover="hover:bg-gray-100/50">
                 Discard changes
             </x-forms.button>
         </div>
@@ -33,7 +33,7 @@
         @csrf
         @method('DELETE')
 
-        <x-forms.button bg_color="bg-red-600/60" bg_color_hover="bg-red-600/80">Delete ticket</x-forms.button>
+        <x-forms.button bg_color="bg-red-600/60" bg_color_hover="hover:bg-red-600/80">Delete ticket</x-forms.button>
     </x-forms.form>
 
 </x-layout>
