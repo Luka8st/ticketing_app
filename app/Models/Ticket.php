@@ -20,4 +20,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function agent() 
+    {
+        return $this->belongsTo(Agent::class);
+    }
 }
