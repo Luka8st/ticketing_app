@@ -9,7 +9,7 @@
     ])
 @php
     $defaults = [
-        'class' => 'rounded font-bold min-w-40 min-h-12',
+        'class' => 'rounded-lg font-bold min-w-40 min-h-12',
     ];
 @endphp
 

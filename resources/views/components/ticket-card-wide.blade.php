@@ -6,7 +6,8 @@
         </a> --}}
 
         <h3 class="group-hover:text-blue-800 font-bold text-xl mt-3 transition-colors duration-300">
-            <a href="#" target="_blank">{{ $ticket->title }}</a>
+            {{-- <a href="#" target="_blank">{{ $ticket->title }}</a> --}}
+            {{ $ticket->title }}
         </h3>
 
         <h4>
@@ -19,13 +20,6 @@
     </div>
 
     <div>
-        {{-- <form method="POST" action="/tickets/{{ $ticket->id }}" id="delete-form">
-            @csrf
-            @method('DELETE')
-
-            <x-forms.button>Delete ticket</x-forms.button>
-        </form> --}}
-
         <form action="/tickets/{{ $ticket->id }}">
             <x-forms.button>Edit ticket</x-forms.button>
         </form>

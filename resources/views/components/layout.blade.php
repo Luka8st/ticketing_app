@@ -52,10 +52,10 @@
             @guest
                 <div class="space-x-6 font-bold">
                     <x-navbar-anchor href="/register">
-                        Sign up
+                        Sign Up
                     </x-navbar-anchor>
                     <x-navbar-anchor href="/login">
-                        Log in
+                        Log In
                     </x-navbar-anchor>
                 </div>
             @endguest
