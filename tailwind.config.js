@@ -14,6 +14,12 @@ export default {
       },
       fontSize: {
         '2xs': ".625rem" //10px
+      },
+      maxHeight: {
+        '12.4': "3.1rem"
+      },
+      height: {
+        '12.4': "3.1rem"
       }
     },
   },
