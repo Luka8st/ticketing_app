@@ -12,10 +12,22 @@ class DepartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 3; $i++) {
+        // for ($i = 0; $i < 3; $i++) {
+        //     $dep = \App\Models\Department::factory()->create([
+        //         'name' => fake()->randomElement(['Human Resources', 'Finance', 'Marketing', 'Sales', 'IT', 'Customer Service']),
+        //     ]);
+        // }
+
+        $departments = ['Human Resources', 'Finance', 'Marketing', 'Sales', 'IT', 'Customer Service'];
+        $created = 0;
+        while ($created < 3) {
+            $index = rand(0, count($departments));
             $dep = \App\Models\Department::factory()->create([
-                'name' => fake()->randomElement(['Human Resources', 'Finance', 'Marketing', 'Sales', 'IT', 'Customer Service']),
+                'name' => $departments[$index]
             ]);
+            array_splice($departments, $index, 1);
+
+            $created++;
         }
     }
 }
