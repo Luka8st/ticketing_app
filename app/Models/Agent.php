@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Agent extends Model
 {
     use HasFactory;
 
-    public function agents()
+    public function department()
     {
-        return $this->hasMany(Agent::class);
+        return $this->belongsTo(Department::class);
     }
 
     public function tickets()
