@@ -9,7 +9,7 @@
         <x-forms.textarea label="Description" name="description" id="description" placeholder=""
             text="{{ $ticket->description }}" />
 
-        <x-forms.select label="Department" name="department" id="department" value="{{ $ticket->department->name }}">
+        <x-forms.select label="Department" name="department" id="department" value="{{ $ticket->department->name }}" status="{{ $ticket->status }}">
             @foreach ($departments as $department)
                 @if ($department == $ticket->department)
                     <option class="text-black" selected>{{ $department->name }}</option>

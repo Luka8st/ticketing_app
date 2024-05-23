@@ -14,6 +14,8 @@
             <b>Department</b>: {{ $ticket->department->name }}
             <br>
             <b>Agent</b>: {{--TODO--}}
+            <br>
+            <b>Status</b>: {{ $ticket->status }}
         </h4>
 
         <p class="text-sm text-gray-400 mt-auto"><b>Description</b>: {{ $ticket->description }}</p>
