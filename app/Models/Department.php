@@ -11,7 +11,7 @@ class Department extends Model
 
     public function agents()
     {
-        return $this->hasMany(Agent::class);
+        return $this->hasMany(User::class);
     }
 
     public function tickets()

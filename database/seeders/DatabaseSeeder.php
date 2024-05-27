@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(DepartmentSeeder::class);
         $this->call(TicketSeeder::class);
-        $this->call(AgentSeeder::class);
+
+        // $this->call(AgentSeeder::class);
+        for ($i = 0; $i < 10; $i++) {
+            $dep = \App\Models\Department::inRandomOrder()->first();
+            \App\Models\User::factory()->for($dep)->create([
+                'name' => fake()->name,
+                'role' => 'agent'
+            ]);
+        }
     }
 }
