@@ -22,7 +22,7 @@
     </div>
 
     <div>
-        <form action="/tickets/{{ $ticket->id }}">
+        <form action="{{route('client.tickets.edit', ['ticket' => $ticket->id])}}">
             <x-forms.button>Edit ticket</x-forms.button>
         </form>
     </div>

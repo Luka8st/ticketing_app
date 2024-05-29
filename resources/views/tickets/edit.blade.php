@@ -2,7 +2,7 @@
     <x-page-heading>Edit Your Ticket</x-page-heading>
 
 
-    <x-forms.form method="POST" action="/tickets/{{ $ticket->id }}">
+    <x-forms.form method="POST" action="{{route('client.tickets.update', ['ticket' => $ticket->id])}}">
         @csrf
         @method('PATCH')
         <x-forms.input label="Title" name="title" id="title" placeholder="" value="{{ $ticket->title }}" />
@@ -34,7 +34,7 @@
         </div>
     </x-forms.form>
 
-    <x-forms.form method="POST" action="/tickets/{{ $ticket->id }}" id="delete-form" class="justify-right">
+    <x-forms.form method="POST" action="{{route('client.tickets.destroy', ['ticket' => $ticket->id])}}" id="delete-form" class="justify-right">
         @csrf
         @method('DELETE')
 

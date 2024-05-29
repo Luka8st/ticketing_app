@@ -24,13 +24,13 @@
             </div>
 
             <div class="space-x-6 font-bold">
-                <x-navbar-anchor href="/tickets">
+                <x-navbar-anchor :href="route('client.tickets.index')">
                     My Tickets
                 </x-navbar-anchor>
                 <x-navbar-anchor href="/departments">
                     Departments
                 </x-navbar-anchor>
-                <x-navbar-anchor href="/tickets/create">
+                <x-navbar-anchor :href="route('client.tickets.create')">
                     Post a Ticket
                 </x-navbar-anchor>
             </div>

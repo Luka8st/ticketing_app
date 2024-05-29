@@ -49,7 +49,7 @@ class TicketController extends Controller
 
         Auth::user()->tickets()->create($attributes);
 
-        return redirect('/');
+        return redirect(route('client.homepage'));
     }
 
     /**
@@ -88,7 +88,7 @@ class TicketController extends Controller
 
         $ticket->update($attributes);
 
-        return redirect('/');
+        return redirect(route('client.homepage'));
     }
 
     /**
@@ -99,6 +99,6 @@ class TicketController extends Controller
         $this->authorize('edit', $ticket);
         $ticket->delete();
 
-        return redirect('/tickets');
+        return redirect(route('client.homepage'));
     }
 }
