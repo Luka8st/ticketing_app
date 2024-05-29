@@ -4,6 +4,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
+use App\Models\Department;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,7 +40,12 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
 
 Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(function () {
     Route::get('/', function () {
-        return view('welcome');  
+        // return view('agents.homepage', [
+        //     'user' => Auth::user(), 
+        //     'department' => Auth::user()->department()->with('tickets')->first()
+        // ]);  
+
+        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent]);
     })->name('homepage');
 });
 
