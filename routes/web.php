@@ -45,8 +45,12 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(fun
         //     'department' => Auth::user()->department()->with('tickets')->first()
         // ]);  
 
-        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent]);
+        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->get()]);
     })->name('homepage');
+
+    Route::name('tickets.')->prefix('tickets')->group(function () {
+        Route::patch('/close/{ticket}', [TicketController::class, 'close'])->can('close', 'ticket')->name('close');
+    });
 });
 
 Route::middleware('guest')->group(function () {

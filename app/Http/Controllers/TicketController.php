@@ -101,4 +101,16 @@ class TicketController extends Controller
 
         return redirect(route('client.homepage'));
     }
+
+    /**
+     * Mark ticket as closed
+     */
+    public function close(Ticket $ticket) {
+        $ticket->update([
+            'status' => 'closed',
+            'closed_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect(route('agent.homepage'));
+    }
 }

@@ -20,7 +20,9 @@
     </div>
 
     <div>
-        <form action="{{route('client.tickets.edit', ['ticket' => $ticket->id])}}">
+        <form method="POST" action="{{route('agent.tickets.close', ['ticket' => $ticket->id])}}">
+            @csrf
+            @method('PATCH')
             <x-forms.button>Mark as closed</x-forms.button>
         </form>
     </div>
