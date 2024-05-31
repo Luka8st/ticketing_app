@@ -13,7 +13,7 @@ class TicketSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $dep = \App\Models\Department::inRandomOrder()->first();
             $user = \App\Models\User::first();
             \App\Models\Ticket::factory()->for($user)->for($dep)->create([

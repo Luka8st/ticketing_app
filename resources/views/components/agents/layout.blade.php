@@ -15,9 +15,9 @@
 
 <body class="font-hanken-grotesk pb-20 bg-gray-200">
 
-    <div class="px-10">
-        <nav class="text-white flex justify-between items-center px-4 py-4 mx-auto border-b border-white/10 h-20 bg-red-800 rounded-xl">
-            <div>
+    <div class="">
+        <nav class="text-white flex justify-between items-center px-10 py-4 mx-auto border-b border-white/10 h-20 bg-red-800">
+            <div class="">
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logoipsum-325.svg') }}" alt="" />
                 </a>
@@ -58,9 +58,11 @@
             @endguest
         </nav>
 
-        <main class="mt-10 mx-auto bg-white rounded-xl px-4 py-4 w-full">
-            {{ $slot }}
-        </main>
+        <div class="px-10">
+            <main class="mt-10 mx-auto bg-white rounded-xl px-4 py-4 w-full">
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 </body>
 

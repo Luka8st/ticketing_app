@@ -19,7 +19,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Auth::user()->tickets;
+        // $tickets = Auth::user()->tickets;
+        $tickets = Ticket::where('user_id', Auth::user()->id)->paginate(3);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
@@ -121,7 +122,7 @@ class TicketController extends Controller
     public function indexNewForAgent() 
     {
         $department = Auth::user()->department;
-        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->get();
+        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->paginate(6);
 
         return view('agents.new-tickets', ['tickets' => $tickets, 'department' => $department]);
     }
@@ -145,7 +146,7 @@ class TicketController extends Controller
      */
     public function indexClosedForAgent() 
     {
-        $tickets = Ticket::where('status', 'closed')->where('agent_id', Auth::user()->id)->get();
+        $tickets = Ticket::where('status', 'closed')->where('agent_id', Auth::user()->id)->paginate(6);
 
         return view('agents.closed-tickets', ['tickets' => $tickets]);
     }

@@ -8,4 +8,8 @@
         @endforeach
     </div>
 
+    <div>
+        {{ $tickets->links() }}
+    </div>
+
 </x-agents.layout>

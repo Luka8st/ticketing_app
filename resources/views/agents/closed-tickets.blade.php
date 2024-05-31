@@ -7,4 +7,8 @@
             <x-agents.ticket-card-wide :ticket="$ticket" type="closed"/>
         @endforeach
     </div>
+
+    <div>
+        {{ $tickets->links() }}
+    </div>
 </x-agents.layout>

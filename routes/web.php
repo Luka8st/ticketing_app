@@ -45,7 +45,7 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(fun
         //     'department' => Auth::user()->department()->with('tickets')->first()
         // ]);  
 
-        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->get()]);
+        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->paginate(6)]);
     })->name('homepage');
 
     Route::name('tickets.')->prefix('tickets')->group(function () {
