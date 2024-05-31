@@ -24,10 +24,10 @@
             </div>
 
             <div class="space-x-6 font-bold">
-                <x-agents.navbar-anchor :href="route('client.tickets.index')">
+                <x-agents.navbar-anchor :href="route('agent.tickets.indexNew')">
                     New Tickets
                 </x-agents.navbar-anchor>
-                <x-agents.navbar-anchor :href="route('client.tickets.create')">
+                <x-agents.navbar-anchor :href="route('agent.tickets.indexClosed')">
                     My Closed Tickets
                 </x-agents.navbar-anchor>
             </div>

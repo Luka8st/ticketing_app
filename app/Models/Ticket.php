@@ -9,6 +9,10 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'opened_at' => 'datetime',
+        'closed_at' => 'datetime',
+    ];
     protected $table = 'tickets';
 
     public function user() 

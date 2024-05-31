@@ -13,7 +13,7 @@
         <h4>
             <b>Department</b>: {{ $ticket->department->name }}
             <br>
-            <b>Agent</b>: {{--TODO--}}
+            <b>Agent</b>: {{ $ticket->agent ? $ticket->agent->name : null}}
             <br>
             <b>Status</b>: {{ $ticket->status }}
         </h4>

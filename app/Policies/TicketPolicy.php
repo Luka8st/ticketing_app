@@ -69,8 +69,8 @@ class TicketPolicy
         return $ticket->user->is($user);
     }
 
-    public function close(User $user, Ticket $ticket): bool
+    public function changeStatus(User $user, Ticket $ticket): bool
     {
-        return $ticket->agent->is($user);
+        return $ticket->agent == null || $ticket->agent->is($user);
     }
 }

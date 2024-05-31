@@ -49,7 +49,10 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(fun
     })->name('homepage');
 
     Route::name('tickets.')->prefix('tickets')->group(function () {
-        Route::patch('/close/{ticket}', [TicketController::class, 'close'])->can('close', 'ticket')->name('close');
+        Route::patch('/close/{ticket}', [TicketController::class, 'close'])->can('changeStatus', 'ticket')->name('close');
+        Route::get('/index', [TicketController::class, 'indexNewForAgent'])->name('indexNew');
+        Route::patch('/open/{ticket}', [TicketController::class, 'open'])->can('changeStatus', 'ticket')->name('open');
+        Route::get('/indexClosed', [TicketController::class, 'indexClosedForAgent'])->name('indexClosed');
     });
 });
 
