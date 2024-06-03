@@ -10,6 +10,9 @@ class Ticket extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'tickets';
+    protected $casts = [
+        'files' => 'array',
+    ];
 
     public function user() 
     {

@@ -1,7 +1,6 @@
 <x-layout>
     <x-page-heading>Edit Your Ticket</x-page-heading>
 
-
     <x-forms.form method="POST" action="/tickets/{{ $ticket->id }}">
         @csrf
         @method('PATCH')
@@ -19,6 +18,12 @@
                 
             @endforeach
         </x-forms.select>
+
+        <div class="flex flex-row">
+            @foreach ($ticket->files as $file)
+                <img src={{asset($file)}} alt="" class="w-40 h-40 mx-8"/>
+            @endforeach
+        </div>
 
         <div class="flex justify-between ">
             <x-forms.button bg_color="bg-green-600/60" bg_color_hover="hover:bg-green-600/80">Update ticket</x-forms.button>

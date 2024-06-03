@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Agent::class)->nullable();
             $table->string('title');
             $table->text('description');
+            $table->json('files')->nullable();
             $table->timestamps();
         });
     }
