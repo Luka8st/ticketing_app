@@ -41,8 +41,12 @@ class TicketController extends Controller
             'title' => ['required'],
             'description' => ['required'],
             'department' => ['required'],
-            'files.*' => 'required|file|mimes:jpg,png|max:2048'
-        ]);
+            'files.*' => 'file|mimes:jpg,png|max:2048'
+        ],
+        [
+            'files.*.mimes' => 'The files must be of type: jpg, png.'
+        ]
+    );
 
         // dd( $request->file('files'));
         $files = $request->file('files');
@@ -95,16 +99,38 @@ class TicketController extends Controller
         $attributes = request()->validate([
             'title' => ['required'],
             'description' => ['required'],
-            'department' => ['required']
-        ]);
+            'department' => ['required'],
+            'files.*' => 'file|mimes:jpg,png|max:2048'
+        ],
+        [
+            'files.*.mimes' => 'The files must be of type: jpg, png.'
+        ]
+    );
+
+        $files = $request->file('files');
+        $filePaths = [];
+        if($request->hasFile('files'))
+        {
+            $counter = 1;
+            foreach ($files as $file) {
+
+                $filePaths[] = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
+
+                $counter++;
+            }
+        }
 
         $department_id = Department::where('name', $attributes['department'])->first()->id;
 
-        $attributes = Arr::except($attributes, 'department');
+        $attributes = Arr::except($attributes, ['department', 'files']);
         $attributes['department_id'] = $department_id;
 
-        $ticket->update($attributes);
+        $existingFiles = $ticket->files;
+        
+        $attributes['files'] = array_merge($ticket->files, $filePaths);
 
+        $ticket->update($attributes);
+        
         return redirect('/');
     }
 
