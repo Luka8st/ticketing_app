@@ -11,38 +11,45 @@
         </h3>
 
         <h4>
-            <b>Department</b>: {{ $ticket->department->name }}
-            <br>
-            <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i d.m.Y') : null}}
-            @if ($type == "open" || $type == "closed")
+            <b>Submitted by</b>: {{ $ticket->user->name }}
+        </h4>
+
+        <h4 class="mt-auto">
+            <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i d.m.Y') : null }}
+            @if ($type == 'open' || $type == 'closed')
                 <br>
-                <b>Opened at</b>: {{ $ticket->opened_at ? $ticket->opened_at->format('H:i d.m.Y') : null}}
+                <b>Opened at</b>: {{ $ticket->opened_at ? $ticket->opened_at->format('H:i d.m.Y') : null }}
             @endif
-            @if ($type == "closed")
+            @if ($type == 'closed')
                 <br>
                 <b>Closed at</b>: {{ $ticket->closed_at ? $ticket->closed_at->format('H:i d.m.Y') : null }}
             @endif
         </h4>
+        
 
-        <p class="text-sm text-gray-800 mt-auto py-4"><b>Description</b>: {{ $ticket->description }}</p>
+        {{-- <p class="text-sm text-gray-800 mt-auto py-4"><b>Description</b>: {{ $ticket->description }}</p> --}}
     </div>
 
-    <div>
-        @if ($type == "open")
-            <form method="POST" action="{{route('agent.tickets.close', ['ticket' => $ticket->id])}}">
+    <div class="my-4">
+        @if ($type == 'open')
+            <form method="POST" action="{{ route('agent.tickets.close', ['ticket' => $ticket->id]) }}">
                 @csrf
                 @method('PATCH')
                 <x-forms.button>Mark as closed</x-forms.button>
             </form>
         @else
-            @if ($type == "new")
-                <form method="POST" action="{{route('agent.tickets.open', ['ticket' => $ticket->id])}}">
+            @if ($type == 'new')
+                {{-- <form method="POST" action="{{ route('agent.tickets.open', ['ticket' => $ticket->id]) }}">
                     @csrf
                     @method('PATCH')
                     <x-forms.button>Start Resolving</x-forms.button>
-                </form>
+                </form> --}}
+                <a href="{{ route('agent.tickets.showNew', ['ticket' => $ticket->id]) }}"
+                    class="font-bold rounded-xl px-6 py-4 hover:bg-blue-800/80 bg-blue-800/60">
+                    View Info
+                </a>
             @endif
         @endif
-        
+
     </div>
-</x-panel>
+    </x-panel>

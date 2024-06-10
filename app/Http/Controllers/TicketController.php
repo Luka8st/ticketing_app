@@ -151,4 +151,9 @@ class TicketController extends Controller
         return view('agents.closed-tickets', ['tickets' => $tickets]);
     }
 
+    public function showNewForAgent(Ticket $ticket)
+    {
+        return view('agents.show-new-ticket', ['ticket' => $ticket, 'user' => $ticket->user]);
+    }
+
 }
