@@ -13,26 +13,23 @@
         rel="stylesheet">
 </head>
 
-<body class="bg-black text-white font-hanken-grotesk pb-20">
+<body class="font-hanken-grotesk pb-20 bg-gray-200">
 
-    <div class="px-10">
-        <nav class="flex justify-between items-center py-4 border-b border-white/10 h-20">
-            <div>
+    <div class="">
+        <nav class="text-white flex justify-between items-center px-10 py-4 mx-auto border-b border-white/10 h-20 bg-red-800">
+            <div class="">
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logoipsum-325.svg') }}" alt="" />
                 </a>
             </div>
 
             <div class="space-x-6 font-bold">
-                <x-navbar-anchor :href="route('client.tickets.index')">
-                    My Tickets
-                </x-navbar-anchor>
-                <x-navbar-anchor href="/departments">
-                    Departments
-                </x-navbar-anchor>
-                <x-navbar-anchor :href="route('client.tickets.create')">
-                    Post a Ticket
-                </x-navbar-anchor>
+                <x-agents.navbar-anchor :href="route('agent.tickets.indexNew')">
+                    New Tickets
+                </x-agents.navbar-anchor>
+                <x-agents.navbar-anchor :href="route('agent.tickets.indexClosed')">
+                    My Closed Tickets
+                </x-agents.navbar-anchor>
             </div>
 
             @auth
@@ -42,7 +39,7 @@
                         @method('DELETE')
 
                         <button
-                            class="group h-12.4 px-6 inline-block align-top max-w-xs mx-auto rounded-xl ring-1 ring-slate-900/5 shadow-lg space-y-3 hover:bg-white/10 hover:ring-sky-500">
+                            class="group h-12.4 px-6 inline-block align-top max-w-xs mx-auto rounded-xl ring-1 ring-slate-900/5 shadow-lg space-y-3 bg-yellow-400/80 hover:bg-yellow-400/100 hover:ring-sky-500">
                             Log Out
                         </button>
                     </form>
@@ -61,9 +58,11 @@
             @endguest
         </nav>
 
-        <main class="mt-10 max-w-[986px] mx-auto">
-            {{ $slot }}
-        </main>
+        <div class="px-10">
+            <main class="mt-10 mx-auto bg-white rounded-xl px-4 py-4 w-full">
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 </body>
 

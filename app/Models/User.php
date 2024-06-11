@@ -43,13 +43,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public function employer()
-    // {
-    //     return $this->hasOne(Employer::class);
-    // }
 
     public function tickets() 
     {
         return $this->hasMany(Ticket::class)->orderBy('updated_at', 'desc');
+    }
+
+    public function ticketsForAgent() 
+    {
+        return $this->hasMany(Ticket::class, 'agent_id')->orderBy('updated_at');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

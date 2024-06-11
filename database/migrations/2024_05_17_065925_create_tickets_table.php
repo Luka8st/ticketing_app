@@ -18,9 +18,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Department::class);
-            $table->foreignIdFor(Agent::class)->nullable();
+            $table->foreignIdFor(User::class, 'agent_id')->nullable();
             $table->string('title');
             $table->text('description');
+            $table->string('status', array('new', 'open', 'closed'))->default('new');
+            $table->timestamp('opened_at')->nullable();
+            $table->timestamp('closed_at')->nullable();
             $table->timestamps();
         });
     }

@@ -68,4 +68,9 @@ class TicketPolicy
     {
         return $ticket->user->is($user);
     }
+
+    public function changeStatus(User $user, Ticket $ticket): bool
+    {
+        return $ticket->agent == null || $ticket->agent->is($user);
+    }
 }

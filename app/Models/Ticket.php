@@ -9,11 +9,15 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'opened_at' => 'datetime',
+        'closed_at' => 'datetime',
+    ];
     protected $table = 'tickets';
 
     public function user() 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function department() 
@@ -23,6 +27,6 @@ class Ticket extends Model
 
     public function agent() 
     {
-        return $this->belongsTo(Agent::class);
+        return $this->belongsTo(User::class, 'agent_id');
     }
 }
