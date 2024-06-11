@@ -1,7 +1,7 @@
 <x-layout>
     <x-page-heading>New Ticket</x-page-heading>
 
-    <x-forms.form method="POST" action="/tickets" enctype="multipart/form-data">
+    <x-forms.form method="POST" action="{{route('client.tickets.store')}}" enctype="multipart/form-data">
         @csrf
         <x-forms.input label="Title" name="title" placeholder="" />
         <x-forms.textarea label="Description" name="description" placeholder="" />

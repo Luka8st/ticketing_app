@@ -20,7 +20,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Auth::user()->tickets;
+        // $tickets = Auth::user()->tickets;
+        $tickets = Ticket::where('user_id', Auth::user()->id)->paginate(3);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
@@ -70,7 +71,7 @@ class TicketController extends Controller
 
         Auth::user()->tickets()->create($attributes);
 
-        return redirect('/');
+        return redirect(route('client.homepage'));
     }
 
     /**
@@ -130,8 +131,9 @@ class TicketController extends Controller
         $attributes['files'] = array_merge($ticket->files, $filePaths);
 
         $ticket->update($attributes);
-        
-        return redirect('/');
+
+        return redirect(route('client.homepage'));
+
     }
 
     /**
@@ -142,6 +144,60 @@ class TicketController extends Controller
         $this->authorize('edit', $ticket);
         $ticket->delete();
 
-        return redirect('/tickets');
+        return redirect(route('client.homepage'));
     }
+
+    /**
+     * Mark ticket as closed
+     */
+    public function close(Ticket $ticket) 
+    {
+        $ticket->update([
+            'status' => 'closed',
+            'closed_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect(route('agent.homepage'));
+    }
+
+    /**
+     * Show all new tickets available to agent
+     */
+    public function indexNewForAgent() 
+    {
+        $department = Auth::user()->department;
+        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->paginate(6);
+
+        return view('agents.new-tickets', ['tickets' => $tickets, 'department' => $department]);
+    }
+
+    /**
+     * Mark ticket as open
+     */
+    public function open(Ticket $ticket) 
+    {
+        $ticket->update([
+            'agent_id' => Auth::user()->id,
+            'status' => 'open',
+            'opened_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect(route('agent.homepage'));
+    }
+
+    /**
+     * Show all tickets closed by agent
+     */
+    public function indexClosedForAgent() 
+    {
+        $tickets = Ticket::where('status', 'closed')->where('agent_id', Auth::user()->id)->paginate(6);
+
+        return view('agents.closed-tickets', ['tickets' => $tickets]);
+    }
+
+    public function showNewForAgent(Ticket $ticket)
+    {
+        return view('agents.show-new-ticket', ['ticket' => $ticket, 'user' => $ticket->user]);
+    }
+
 }

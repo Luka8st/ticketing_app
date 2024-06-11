@@ -35,7 +35,7 @@ class SessionController extends Controller
 
         request()->session()->regenerate();
 
-        return redirect('/');
+        return Auth::user()->role == 'agent' ? redirect(route('agent.homepage')) : redirect(route('client.homepage'));
     }
 
     /**

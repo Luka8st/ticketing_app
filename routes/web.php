@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\TicketController;
 use App\Models\Department;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,28 +19,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');    
+
+
+Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
+
+Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');  
+    })->name('homepage');
+
+    Route::name('tickets.')->prefix('tickets')->group(function () {
+        Route::get('/', [TicketController::class, 'index'])->name('index');
+        Route::get('/create', [TicketController::class, 'create'])->name('create');
+        Route::post('/', [TicketController::class, 'store'])->name('store');
+        Route::delete('/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
+        Route::get('/{ticket}', [TicketController::class, 'edit'])->can('edit', 'ticket')->name('edit');
+        Route::patch('/{ticket}', [TicketController::class, 'update'])->name('update');
+    });
 });
 
-// Route::get('/', [JobController::class, 'index']);
-// Route::get('/jobs/create', [JobController::class, 'create'])->middleware('auth');
-// Route::post('/jobs', [JobController::class, 'store'])->middleware('auth');
-// Route::get('/search', SearchController::class);
-// Route::get('/tags/{tag:name}', TagController::class);
+Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(function () {
+    Route::get('/', function () {
+        // return view('agents.homepage', [
+        //     'user' => Auth::user(), 
+        //     'department' => Auth::user()->department()->with('tickets')->first()
+        // ]);  
 
-Route::middleware('auth')->group(function () {
-    Route::delete('/logout', [SessionController::class, 'destroy']);
+        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->paginate(6)]);
+    })->name('homepage');
 
-    Route::get('/tickets', [TicketController::class, 'index']);
-    Route::get('/tickets/create', [TicketController::class, 'create']);
-    Route::post('/tickets', [TicketController::class, 'store']);
-    Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
-    Route::get('/tickets/{ticket}', [TicketController::class, 'edit'])->can('edit', 'ticket');
-    Route::patch('/tickets/{ticket}', [TicketController::class, 'update']);
+    Route::name('tickets.')->prefix('tickets')->group(function () {
+        Route::patch('/close/{ticket}', [TicketController::class, 'close'])->can('changeStatus', 'ticket')->name('close');
+        Route::get('/index', [TicketController::class, 'indexNewForAgent'])->name('indexNew');
+        Route::patch('/open/{ticket}', [TicketController::class, 'open'])->can('changeStatus', 'ticket')->name('open');
+        Route::get('/index-closed', [TicketController::class, 'indexClosedForAgent'])->name('indexClosed');
+
+        Route::get('/show-new/{ticket}', [TicketController::class, 'showNewForAgent'])->name('showNew');
+    });
 });
 
 Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');    
+    });
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::post('/register', [RegisteredUserController::class, 'store']);
     Route::get('/login', [SessionController::class, 'create'])->name('login');

@@ -13,14 +13,16 @@
         <h4>
             <b>Department</b>: {{ $ticket->department->name }}
             <br>
-            <b>Agent</b>: {{--TODO--}}
+            <b>Agent</b>: {{ $ticket->agent ? $ticket->agent->name : null}}
+            <br>
+            <b>Status</b>: {{ $ticket->status }}
         </h4>
 
         <p class="text-sm text-gray-400 mt-auto"><b>Description</b>: {{ $ticket->description }}</p>
     </div>
 
     <div>
-        <form action="/tickets/{{ $ticket->id }}">
+        <form action="{{route('client.tickets.edit', ['ticket' => $ticket->id])}}">
             <x-forms.button>Edit ticket</x-forms.button>
         </form>
     </div>
