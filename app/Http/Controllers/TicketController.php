@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Storage;
+use DateTime;
 
 class TicketController extends Controller
 {
@@ -128,7 +129,14 @@ class TicketController extends Controller
 
         $existingFiles = $ticket->files;
         
-        $attributes['files'] = array_merge($ticket->files, $filePaths);
+        if ($ticket->files) {
+            $attributes['files'] = array_merge($ticket->files, $filePaths);
+        }
+        else {
+            $attributes['files'] = $filePaths;
+        }
+
+        $attributes['updated_at'] = date('Y-m-d H:i:s');
 
         $ticket->update($attributes);
 
@@ -166,9 +174,41 @@ class TicketController extends Controller
     public function indexNewForAgent() 
     {
         $department = Auth::user()->department;
-        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->paginate(6);
+        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->orderBy('created_at')->paginate(12);
+
+        foreach ($tickets as $ticket) {
+            $createdAt = new DateTime($ticket['created_at']);
+            $currentTime = new DateTime();
+            $diff = $createdAt->diff($currentTime);
+            if ($diff->y == 0 && $diff->m == 0 && $diff->d <= 5) $ticket['priority'] = "low";
+            else if ($diff->y == 0 && $diff->m == 0 && $diff->d <= 10) $ticket['priority'] = "medium";
+            else $ticket['priority'] = "high";
+        }
 
         return view('agents.new-tickets', ['tickets' => $tickets, 'department' => $department]);
+    }
+
+    /**
+     * Index tickets that agent opened
+     */
+    public function indexOpenedForAgent() 
+    {
+        $department = Auth::user()->department;
+        // $tickets = Auth::user()->ticketsForAgent()->where('status', 'open')->orderBy('created_at')->paginate(12);
+        $tickets = Ticket::where('status', 'open')->where('agent_id', Auth::user()->id)->orderBy('created_at')->paginate(12);
+
+        // dd($tickets);
+
+        foreach ($tickets as $ticket) {
+            $createdAt = new DateTime($ticket['created_at']);
+            $currentTime = new DateTime();
+            $diff = $createdAt->diff($currentTime);
+            if ($diff->y == 0 && $diff->m == 0 && $diff->d <= 5) $ticket['priority'] = "low";
+            else if ($diff->y == 0 && $diff->m == 0 && $diff->d <= 10) $ticket['priority'] = "medium";
+            else $ticket['priority'] = "high";
+        }
+
+        return view('agents.homepage', ['tickets' => $tickets]);
     }
 
     /**

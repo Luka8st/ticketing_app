@@ -12,11 +12,9 @@ class Ticket extends Model
     protected $casts = [
         'opened_at' => 'datetime',
         'closed_at' => 'datetime',
-    ];
-    protected $table = 'tickets';
-    protected $casts = [
         'files' => 'array',
     ];
+    protected $table = 'tickets';
 
     public function user() 
     {

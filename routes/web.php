@@ -39,14 +39,16 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
 });
 
 Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(function () {
-    Route::get('/', function () {
-        // return view('agents.homepage', [
-        //     'user' => Auth::user(), 
-        //     'department' => Auth::user()->department()->with('tickets')->first()
-        // ]);  
+    // Route::get('/', function () {
+    //     // return view('agents.homepage', [
+    //     //     'user' => Auth::user(), 
+    //     //     'department' => Auth::user()->department()->with('tickets')->first()
+    //     // ]);  
 
-        return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->paginate(6)]);
-    })->name('homepage');
+    //     return view('agents.homepage', ['tickets' => Auth::user()->ticketsForAgent()->where('status', 'open')->paginate(6)]);
+    // })->name('homepage');
+
+    Route::get('/', [TicketController::class, 'indexOpenedForAgent'])->name('homepage');
 
     Route::name('tickets.')->prefix('tickets')->group(function () {
         Route::patch('/close/{ticket}', [TicketController::class, 'close'])->can('changeStatus', 'ticket')->name('close');

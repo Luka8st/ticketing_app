@@ -1,5 +1,5 @@
 @props(['ticket', 'type'])
-<x-agents.panel class="flex gap-x-6 mb-5">
+<x-agents.panel class="flex gap-x-6 mb-5 {{$ticket->priority == null ? '' : ($ticket->priority == 'low' ? 'bg-green-300/70' : ($ticket->priority == 'medium' ? 'bg-yellow-300/70' : 'bg-red-300/70'))}}">
     <div class="flex-1 flex flex-col min-h-52">
         {{-- <a href="#" class="self-start text-sm text-gray-400">
             {{ $job->employer->name }}
@@ -15,8 +15,9 @@
         </h4>
 
         <h4 class="mt-auto">
-            <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i d.m.Y') : null }}
+            
             @if ($type == 'open' || $type == 'closed')
+                <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i d.m.Y') : null }}
                 <br>
                 <b>Opened at</b>: {{ $ticket->opened_at ? $ticket->opened_at->format('H:i d.m.Y') : null }}
             @endif
