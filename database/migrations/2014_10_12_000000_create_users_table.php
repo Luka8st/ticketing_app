@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('client');
             $table->foreignIdFor(Department::class)->nullable();
+            $table->string('image_path')->default('profile_images/default.jpg');
             $table->rememberToken();
             $table->timestamps();
         });

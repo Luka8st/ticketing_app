@@ -16,7 +16,8 @@
 <body class="font-hanken-grotesk pb-20 bg-gray-200">
 
     <div class="">
-        <nav class="text-white flex justify-between items-center px-10 py-4 mx-auto border-b border-white/10 h-20 bg-red-800">
+        <nav
+            class="text-white flex justify-between items-center px-10 py-4 mx-auto border-b border-white/10 h-20 bg-red-800">
             <div class="">
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logoipsum-325.svg') }}" alt="" />
@@ -32,7 +33,45 @@
                 </x-agents.navbar-anchor>
             </div>
 
+
             @auth
+                <div class="relative inline-block text-left">
+                    <div>
+                        <button type="button"
+                            class="inline-flex justify-center rounded-md px-1 py-1 text-sm font-semibold text-gray-900 shadow-sm"
+                            id="menu-button" aria-expanded="true" aria-haspopup="true">
+                            <img src={{ asset(Auth::user()->image_path) }} alt="" class="w-12 h-12 rounded-full" />
+                            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="hidden absolute text-gray-700 right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        id="menu-items" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                        tabindex="-1">
+                        <div class="py-1" role="none">
+                            <div class="px-4 py-2">
+                                {{ Auth::user()->name }}
+                            </div>
+                            <hr>
+                            <form method="POST" action="/logout" class="max-h-12.4">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="block w-full px-4 py-2 text-left text-sm text-gray-700">
+                                    Log Out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endauth
+
+            {{-- @auth
                 <div class="font-bold space-x-6">
                     <form method="POST" action="/logout" class="max-h-12.4">
                         @csrf
@@ -44,7 +83,7 @@
                         </button>
                     </form>
                 </div>
-            @endauth
+            @endauth --}}
 
             @guest
                 <div class="space-x-6 font-bold">
@@ -65,5 +104,31 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('menu-button');
+        const menuItems = document.getElementById('menu-items');
+
+        // Check if elements exist
+        if (menuButton && menuItems) {
+            menuButton.addEventListener('click', function() {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                menuItems.classList.toggle('hidden');
+            });
+
+            // Close the dropdown if clicked outside
+            document.addEventListener('click', function(event) {
+                if (!menuButton.contains(event.target) && !menuItems.contains(event.target)) {
+                    menuItems.classList.add('hidden');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        } else {
+            console.error('Menu button or menu items element not found');
+        }
+    });
+</script>
 
 </html>
