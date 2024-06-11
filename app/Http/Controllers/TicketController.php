@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -40,13 +41,33 @@ class TicketController extends Controller
         $attributes = request()->validate([
             'title' => ['required'],
             'description' => ['required'],
-            'department' => ['required']
-        ]);
+            'department' => ['required'],
+            'files.*' => 'file|mimes:jpg,png|max:2048'
+        ],
+        [
+            'files.*.mimes' => 'The files must be of type: jpg, png.'
+        ]
+    );
+
+        // dd( $request->file('files'));
+        $files = $request->file('files');
+        $filePaths = [];
+        if($request->hasFile('files'))
+        {
+            $counter = 1;
+            foreach ($files as $file) {
+
+                $filePaths[] = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
+
+                $counter++;
+            }
+        }
 
         $department_id = Department::where('name', $attributes['department'])->first()->id;
 
-        $attributes = Arr::except($attributes, 'department');
+        $attributes = Arr::except($attributes, ['department', 'files']);
         $attributes['department_id'] = $department_id;
+        $attributes['files'] = $filePaths;
 
         Auth::user()->tickets()->create($attributes);
 
@@ -79,17 +100,40 @@ class TicketController extends Controller
         $attributes = request()->validate([
             'title' => ['required'],
             'description' => ['required'],
-            'department' => ['required']
-        ]);
+            'department' => ['required'],
+            'files.*' => 'file|mimes:jpg,png|max:2048'
+        ],
+        [
+            'files.*.mimes' => 'The files must be of type: jpg, png.'
+        ]
+    );
+
+        $files = $request->file('files');
+        $filePaths = [];
+        if($request->hasFile('files'))
+        {
+            $counter = 1;
+            foreach ($files as $file) {
+
+                $filePaths[] = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
+
+                $counter++;
+            }
+        }
 
         $department_id = Department::where('name', $attributes['department'])->first()->id;
 
-        $attributes = Arr::except($attributes, 'department');
+        $attributes = Arr::except($attributes, ['department', 'files']);
         $attributes['department_id'] = $department_id;
+
+        $existingFiles = $ticket->files;
+        
+        $attributes['files'] = array_merge($ticket->files, $filePaths);
 
         $ticket->update($attributes);
 
         return redirect(route('client.homepage'));
+
     }
 
     /**

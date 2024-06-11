@@ -21,9 +21,11 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'agent_id')->nullable();
             $table->string('title');
             $table->text('description');
+            $table->json('files')->nullable();
             $table->string('status', array('new', 'open', 'closed'))->default('new');
             $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();
+
             $table->timestamps();
         });
     }

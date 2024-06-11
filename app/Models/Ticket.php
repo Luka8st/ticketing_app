@@ -14,6 +14,9 @@ class Ticket extends Model
         'closed_at' => 'datetime',
     ];
     protected $table = 'tickets';
+    protected $casts = [
+        'files' => 'array',
+    ];
 
     public function user() 
     {
