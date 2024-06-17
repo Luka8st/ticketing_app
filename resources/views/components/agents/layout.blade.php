@@ -55,7 +55,7 @@
                         tabindex="-1">
                         <div class="py-1" role="none">
                             <div class="px-4 py-2">
-                                {{ Auth::user()->name }}
+                                <i>{{ Auth::user()->name }}</i>
                             </div>
                             <hr>
                             <form method="POST" action="/logout" class="max-h-12.4">
