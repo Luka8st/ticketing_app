@@ -56,7 +56,7 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->name('agent.')->group(fun
         Route::patch('/open/{ticket}', [TicketController::class, 'open'])->can('changeStatus', 'ticket')->name('open');
         Route::get('/index-closed', [TicketController::class, 'indexClosedForAgent'])->name('indexClosed');
 
-        Route::get('/show-new/{ticket}', [TicketController::class, 'showNewForAgent'])->name('showNew');
+        Route::get('/show/{ticket}', [TicketController::class, 'showTicketForAgent'])->name('showNew');
     });
 });
 

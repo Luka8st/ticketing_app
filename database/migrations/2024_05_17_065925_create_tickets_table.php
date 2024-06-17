@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('status', array('new', 'open', 'closed'))->default('new');
             $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();
+            $table->string('closing_comment')->nullable();
 
             $table->timestamps();
         });

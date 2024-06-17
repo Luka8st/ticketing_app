@@ -158,11 +158,12 @@ class TicketController extends Controller
     /**
      * Mark ticket as closed
      */
-    public function close(Ticket $ticket) 
+    public function close(Request $request, Ticket $ticket) 
     {
         $ticket->update([
             'status' => 'closed',
-            'closed_at' => date('Y-m-d H:i:s')
+            'closed_at' => date('Y-m-d H:i:s'),
+            'closing_comment' => $request->closing_comment
         ]);
 
         return redirect(route('agent.homepage'));
@@ -235,9 +236,9 @@ class TicketController extends Controller
         return view('agents.closed-tickets', ['tickets' => $tickets]);
     }
 
-    public function showNewForAgent(Ticket $ticket)
+    public function showTicketForAgent(Ticket $ticket)
     {
-        return view('agents.show-new-ticket', ['ticket' => $ticket, 'user' => $ticket->user]);
+        return view('agents.show-ticket', ['ticket' => $ticket, 'user' => $ticket->user]);
     }
 
 }
