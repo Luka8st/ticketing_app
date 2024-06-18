@@ -1,5 +1,5 @@
 <x-agents.layout>
-    <div class="grid grid-cols-3 gap-2 border ring rounded p-3">
+    <div class="grid grid-cols-3 gap-2 border ring rounded p-3 relative z-10">
         <div class="col-span-2 border-r-2 border-r-gray-400 px-4">
             Title: {{ $ticket->title }}
             <br>
@@ -36,13 +36,13 @@
     @elseif ($ticket->status == 'open')
         <div class="grid grid-cols-2 divide-x-2 h-20">
             <div></div>
-            <div class="px-2 text-gray-600 content-center h-20">Opened at: {{ $ticket->opened_at->format('H:i d.m.Y') }}</div>
+            <div class="px-2 text-gray-600 content-center h-20 relative z-0">Opened at: {{ $ticket->opened_at->format('H:i d.m.Y') }}</div>
         </div>
         
         <form method="POST" action="{{ route('agent.tickets.close', ['ticket' => $ticket->id]) }}">
             @csrf
             @method('PATCH')
-            <div class="border ring rounded p-3">
+            <div class="border ring rounded p-3 relative z-0">
                 <x-forms.textarea label="Closing comment" name="closing comment" class="w-full"/>
             </div>
             <div class="mt-4">
