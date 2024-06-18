@@ -174,8 +174,9 @@ class TicketController extends Controller
      */
     public function indexNewForAgent() 
     {
+        $departments = Department::all();
         $department = Auth::user()->department;
-        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->orderBy('created_at')->paginate(12);
+        $tickets = Ticket::where('status', 'new')->where('department_id', $department->id)->orderBy('created_at')->with('user')->get();#->paginate(12);
 
         foreach ($tickets as $ticket) {
             $createdAt = new DateTime($ticket['created_at']);
@@ -186,7 +187,7 @@ class TicketController extends Controller
             else $ticket['priority'] = "high";
         }
 
-        return view('agents.new-tickets', ['tickets' => $tickets, 'department' => $department]);
+        return view('agents.new-tickets', ['tickets' => $tickets, 'department' => $department, 'departments' => $departments]);
     }
 
     /**

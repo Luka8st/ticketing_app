@@ -11,6 +11,7 @@ export default {
         "lime": "#65a30d",
         "teal": "#115e59",
         "teal-light": "#5eead4",
+        "teal-lighter": "#b2d8d8",
         "cyan": "#06b6d4"
       },
       fontFamily: {
