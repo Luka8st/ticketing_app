@@ -29,7 +29,7 @@ class ShowTickets extends Component
 
     public function render()
     {
-        $tickets = Ticket::where('department_id', $this->department->id)->where('status','new')->orderBy('created_at')->orderBy('title')->get();
+        $tickets = Ticket::where('department_id', $this->department->id)->where('status','new')->orderBy('created_at')->orderBy('title')->with('user')->get();
         foreach ($tickets as $ticket) {
             $createdAt = new DateTime($ticket['created_at']);
             $currentTime = new DateTime();
