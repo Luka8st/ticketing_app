@@ -26,6 +26,27 @@ class TicketController extends Controller
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
+    public function indexNew()
+    {
+        // $tickets = Auth::user()->tickets;
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'new')->paginate(3);
+        return view('tickets.index', ['tickets' => $tickets]);
+    }
+
+    public function indexOpen()
+    {
+        // $tickets = Auth::user()->tickets;
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'open')->paginate(3);
+        return view('tickets.index', ['tickets' => $tickets]);
+    }
+
+    public function indexClosed()
+    {
+        // $tickets = Auth::user()->tickets;
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'closed')->paginate(3);
+        return view('tickets.index', ['tickets' => $tickets]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -240,6 +261,11 @@ class TicketController extends Controller
     public function showTicketForAgent(Ticket $ticket)
     {
         return view('agents.show-ticket', ['ticket' => $ticket, 'user' => $ticket->user]);
+    }
+
+    public function showTicketForClient(Ticket $ticket)
+    {
+        return view('tickets.show-ticket', ['ticket' => $ticket]);
     }
 
 }

@@ -26,15 +26,37 @@
             </div>
 
             <div class="space-x-6 font-bold">
-                <x-navbar-anchor :href="route('client.tickets.index')">
-                    My Tickets
-                </x-navbar-anchor>
-                <x-navbar-anchor href="/departments">
-                    Departments
-                </x-navbar-anchor>
+                <div class="relative inline-block text-left">
+                    <div>
+                        <x-navbar-anchor
+                           id="menu-button2" aria-expanded="true" aria-haspopup="true">
+                            My tickets
+                        </x-navbar-anchor>
+                    </div>
+
+                    <div class="hidden absolute text-gray-700 font-normal left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        id="menu-items2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                        tabindex="-1">
+                        <div class="py-1" role="none">
+                            <a class="px-2 block hover:bg-gray-200" href="{{route('client.tickets.index.new')}}">
+                                New(unopened)
+                            </a>
+                            <a class="px-2 block hover:bg-gray-200" href="{{route('client.tickets.index.open')}}">
+                                Open
+                            </a>
+                            <a class="px-2 block hover:bg-gray-200" href="{{route('client.tickets.index.closed')}}">
+                                Closed
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <x-navbar-anchor :href="route('client.tickets.create')">
                     Post a Ticket
                 </x-navbar-anchor>
+
+
+                
             </div>
 
 
@@ -125,6 +147,32 @@
                 if (!menuButton.contains(event.target) && !menuItems.contains(event.target)) {
                     menuItems.classList.add('hidden');
                     menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        } else {
+            console.error('Menu button or menu items element not found');
+        }
+
+
+        
+
+        const menuButton2 = document.getElementById('menu-button2');
+        const menuItems2 = document.getElementById('menu-items2');
+
+        // Check if elements exist
+        if (menuButton2 && menuItems2) {
+            menuButton2.addEventListener('click', function() {
+                const isExpanded = menuButton2.getAttribute('aria-expanded') === 'true';
+                menuButton2.setAttribute('aria-expanded', !isExpanded);
+                menuItems2.classList.toggle('hidden');
+            });
+
+            // Close the dropdown if clicked outside
+            document.addEventListener('click', function(event) {
+                console.log("dsadfvrsgdbfg");
+                if (!menuButton2.contains(event.target) && !menuItems2.contains(event.target)) {
+                    menuItems2.classList.add('hidden');
+                    menuButton2.setAttribute('aria-expanded', 'false');
                 }
             });
         } else {

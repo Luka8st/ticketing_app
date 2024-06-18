@@ -22,8 +22,15 @@
     </div>
 
     <div>
-        <form action="{{route('client.tickets.edit', ['ticket' => $ticket->id])}}">
-            <x-forms.button>Edit ticket</x-forms.button>
-        </form>
+        @if ($ticket->status == 'new')
+            <form action="{{route('client.tickets.edit', ['ticket' => $ticket->id])}}">
+                <x-forms.button>Edit ticket</x-forms.button>
+            </form>
+        @else
+            <form action="{{route('client.tickets.show', ['ticket' => $ticket->id])}}">
+                <x-forms.button>View info</x-forms.button>
+            </form>
+        @endif
+        
     </div>
 </x-panel>

@@ -29,12 +29,20 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
     })->name('homepage');
 
     Route::name('tickets.')->prefix('tickets')->group(function () {
-        Route::get('/', [TicketController::class, 'index'])->name('index');
+        Route::name('index.')->prefix('index')->group(function () {
+            Route::get('/', [TicketController::class, 'index'])->name('all');
+            Route::get('/new', [TicketController::class, 'indexNew'])->name('new');
+            Route::get('/open', [TicketController::class, 'indexOpen'])->name('open');
+            Route::get('/closed', [TicketController::class, 'indexClosed'])->name('closed');
+        });
+
         Route::get('/create', [TicketController::class, 'create'])->name('create');
         Route::post('/', [TicketController::class, 'store'])->name('store');
         Route::delete('/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
         Route::get('/{ticket}', [TicketController::class, 'edit'])->can('edit', 'ticket')->name('edit');
         Route::patch('/{ticket}', [TicketController::class, 'update'])->name('update');
+        
+        Route::get('/show/{ticket}', [TicketController::class, 'showTicketForClient'])->can('edit', 'ticket')->name('show');
     });
 });
 
