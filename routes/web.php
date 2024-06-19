@@ -39,10 +39,10 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
         Route::get('/create', [TicketController::class, 'create'])->name('create');
         Route::post('/', [TicketController::class, 'store'])->name('store');
         Route::delete('/{ticket}', [TicketController::class, 'destroy'])->name('destroy');
-        Route::get('/{ticket}', [TicketController::class, 'edit'])->can('edit', 'ticket')->name('edit');
-        Route::patch('/{ticket}', [TicketController::class, 'update'])->name('update');
+        Route::get('/{ticket}', [TicketController::class, 'edit'])->can('edit', 'ticket')->can('beEdited', 'ticket')->name('edit');
+        Route::patch('/{ticket}', [TicketController::class, 'update'])->can('beEdited', 'ticket')->name('update');
         
-        Route::get('/show/{ticket}', [TicketController::class, 'showTicketForClient'])->can('edit', 'ticket')->name('show');
+        Route::get('/show/{ticket}', [TicketController::class, 'showTicketForClient'])->can('edit', 'ticket')->can('showInfo', 'ticket')->name('show');
     });
 });
 

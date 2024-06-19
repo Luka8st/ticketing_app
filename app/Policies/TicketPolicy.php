@@ -73,4 +73,14 @@ class TicketPolicy
     {
         return $ticket->agent == null || $ticket->agent->is($user);
     }
+
+    public function beEdited(User $user, Ticket $ticket): bool
+    {
+        return $ticket->status == "new";
+    }
+
+    public function showInfo(User $user, Ticket $ticket): bool
+    {
+        return $ticket->status != "new";
+    }
 }
