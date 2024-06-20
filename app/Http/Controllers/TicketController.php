@@ -223,7 +223,7 @@ class TicketController extends Controller
     {
         $department = Auth::user()->department;
         // $tickets = Auth::user()->ticketsForAgent()->where('status', 'open')->orderBy('created_at')->paginate(12);
-        $tickets = Ticket::where('status', 'open')->where('agent_id', Auth::user()->id)->orderBy('created_at')->paginate(12);
+        $tickets = Ticket::where('status', 'open')->where('agent_id', Auth::user()->id)->orderBy('created_at')->paginate(6);
 
         // dd($tickets);
 
