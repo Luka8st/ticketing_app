@@ -36,7 +36,7 @@
                 <thead class="z-10 bg-blue-300 sticky top-0 left-0 right-0 ">
 
                     <tr class="">
-                        <th class="border px-4 py-2 border-gray-400 ">
+                        <th class="border px-4 py-2 border-gray-400 w-3/4">
                             Title
                         </th>
                         <th class="border px-4 py-2 border-gray-400 ">

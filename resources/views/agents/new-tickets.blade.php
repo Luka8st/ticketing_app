@@ -9,11 +9,6 @@
     <h1 class="font-bold text-4xl">
         New Tickets For Department: {{ $department->name }}
     </h1>
-        
-    {{-- <x-forms.form action="/search" class="mt-6 bg-gray-200 rounded-xl">
-        <x-forms.input name="q" :label="false" placeholder=""/>
-    </x-forms.form>
-     --}}
      
      <div class="flex justify-center">
         <input type="text" id="ticketSearch" placeholder="Search tickets by name" class="w-1/3 p-2 bg-gray-200/40 border border-gray-300 rounded">
