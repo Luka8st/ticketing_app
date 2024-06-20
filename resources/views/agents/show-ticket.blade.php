@@ -35,7 +35,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="border ring rounded p-3 relative z-0">
-                        <x-forms.textarea label="Closing comment" name="closing comment" class="w-full" />
+                        <x-forms.textarea label="Closing comment" name="closing_comment" class="w-full" />
                     </div>
                     <div class="mt-4">
                         <x-forms.button>Mark as closed</x-forms.button>

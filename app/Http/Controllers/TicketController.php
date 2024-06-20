@@ -184,6 +184,13 @@ class TicketController extends Controller
      */
     public function close(Request $request, Ticket $ticket) 
     {
+        $attributes = request()->validate([
+            'closing_comment' => ['required']
+        ],
+        [
+            'closing_comment.required' => 'You must provide a comment to close this issue.'
+        ]
+    );
         $ticket->update([
             'status' => 'closed',
             'closed_at' => date('Y-m-d H:i:s'),
