@@ -11,25 +11,21 @@
     
     <div class="flex-1 flex flex-col min-h-44">
 
-        <h3 class="group-hover:text-blue-800 font-bold text-xl mt-3 transition-colors duration-300 ticket-name">
+        <h3 class="group-hover:text-blue-800 text-xl mt-3 transition-colors duration-300 ticket-name">
             {{-- <a href="#" target="_blank">{{ $ticket->title }}</a> --}}
-            {{ $ticket->title }}
+            <b>{{ $ticket->title }}</b> by <i>{{ $ticket->user->name }}</i>
         </h3>
-
-        <h4>
-            <b>Submitted by</b>: {{ $ticket->user->name }}
-        </h4>
 
         <h4 class="mt-auto">
 
             @if ($type == 'open' || $type == 'closed')
-                <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i d.m.Y') : null }}
+                <b>Created at</b>: {{ $ticket->created_at ? $ticket->created_at->format('H:i F d.') : null }}
                 <br>
-                <b>Opened at</b>: {{ $ticket->opened_at ? $ticket->opened_at->format('H:i d.m.Y') : null }}
+                <b>Opened at</b>: {{ $ticket->opened_at ? $ticket->opened_at->format('H:i F d.') : null }}
             @endif
             @if ($type == 'closed')
                 <br>
-                <b>Closed at</b>: {{ $ticket->closed_at ? $ticket->closed_at->format('H:i d.m.Y') : null }}
+                <b>Closed at</b>: {{ $ticket->closed_at ? $ticket->closed_at->format('H:i F d.') : null }}
             @endif
         </h4>
 
