@@ -1,4 +1,4 @@
-@props(['ticket', 'type'])
+@props(['ticket', 'type', 'card' => ''])
 {{-- <x-agents.panel class="flex gap-x-6 mb-5 {{
     !$ticket->priority ? '' : 
         ($ticket->priority == 'high' ? 'bg-red-300/70' : 
@@ -7,11 +7,11 @@
             )
         )
     }}"> --}}
-    <x-agents.panel class="flex gap-x-6 mb-5" priority="{{$ticket->priority}}">
+    <x-agents.panel class="flex gap-x-6 mb-5" priority="{{$ticket->priority}}" card="{{$card}}">
     
-    <div class="flex-1 flex flex-col min-h-52">
+    <div class="flex-1 flex flex-col min-h-44">
 
-        <h3 class="group-hover:text-blue-800 font-bold text-xl mt-3 transition-colors duration-300">
+        <h3 class="group-hover:text-blue-800 font-bold text-xl mt-3 transition-colors duration-300 ticket-name">
             {{-- <a href="#" target="_blank">{{ $ticket->title }}</a> --}}
             {{ $ticket->title }}
         </h3>
