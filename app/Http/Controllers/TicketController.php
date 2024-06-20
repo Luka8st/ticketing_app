@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Mail\TicketClosed;
+use App\Mail\TicketOpened;
 use App\Models\Department;
 use App\Policies\TicketPolicy;
 use Illuminate\Http\Request;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Storage;
 use DateTime;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -187,6 +190,8 @@ class TicketController extends Controller
             'closing_comment' => $request->closing_comment
         ]);
 
+        Mail::to($ticket->user)->queue(new TicketClosed($ticket));
+
         return redirect(route('agent.homepage'));
     }
 
@@ -244,6 +249,8 @@ class TicketController extends Controller
             'status' => 'open',
             'opened_at' => date('Y-m-d H:i:s')
         ]);
+
+        Mail::to($ticket->user)->queue(new TicketOpened($ticket, Auth::user()));
 
         return redirect(route('agent.homepage'));
     }
