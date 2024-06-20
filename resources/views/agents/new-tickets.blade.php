@@ -11,7 +11,7 @@
     </h1>
         
     
-    <div class="grid grid-cols-4 gap-4 mt-8 overflow-auto h-screen">
+    <div class="grid grid-cols-4 gap-4 mt-8 overflow-auto max-h-screen">
         @foreach ($tickets as $ticket)
             <x-agents.ticket-card-wide :ticket="$ticket" type="new"/>
         @endforeach
