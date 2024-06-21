@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="grid grid-cols-4 gap-2 h-max">
+    <div class="grid grid-cols-4 gap-2 h-max relative z-0">
         <div class="col-span-3 border-r-2 border-r-gray-400 px-4 ">
             <div class="border rounded p-3 relative z-10">
                 Title: {{ $ticket->title }}

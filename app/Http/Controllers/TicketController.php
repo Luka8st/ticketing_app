@@ -34,21 +34,21 @@ class TicketController extends Controller
     {
         // $tickets = Auth::user()->tickets;
         $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'new')->orderBy('updated_at', 'DESC')->paginate(3);
-        return view('tickets.index', ['tickets' => $tickets]);
+        return view('tickets.index', ['tickets' => $tickets, 'list_type' => 'new']);
     }
 
     public function indexOpen()
     {
         // $tickets = Auth::user()->tickets;
         $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'open')->orderBy('updated_at', 'DESC')->paginate(3);
-        return view('tickets.index', ['tickets' => $tickets]);
+        return view('tickets.index', ['tickets' => $tickets, 'list_type' => 'open']);
     }
 
     public function indexClosed()
     {
         // $tickets = Auth::user()->tickets;
         $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'closed')->orderBy('updated_at', 'DESC')->paginate(3);
-        return view('tickets.index', ['tickets' => $tickets]);
+        return view('tickets.index', ['tickets' => $tickets, 'list_type' => 'closed']);
     }
 
     /**

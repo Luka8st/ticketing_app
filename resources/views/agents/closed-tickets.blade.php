@@ -2,11 +2,18 @@
     <h1 class="font-bold text-4xl">
         My Closed Tickets
     </h1>
+    @if (count($tickets) > 0)
     <div class="grid grid-cols-3 gap-4 mt-8">
         @foreach ($tickets as $ticket)
             <x-agents.ticket-card-wide :ticket="$ticket" type="closed"/>
         @endforeach
     </div>
+    @else
+        <div class="mt-8 p-4 w-full bg-gray-200/40 border border-gray-300 rounded">
+            You haven't closed any tickets. <a href="{{ route('agent.homepage') }}"
+                class="underline text-blue-500">View all your opened tickets</a>
+        </div>
+    @endif
 
     <div>
         {{ $tickets->links() }}
