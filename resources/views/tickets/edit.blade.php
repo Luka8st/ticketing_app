@@ -23,19 +23,21 @@
 
         <x-forms.label name="" label="Uploaded Files" />
         <div class="flex flex-row grid grid-cols-2 gap-8">
-            @if ($ticket->files)
-                @foreach ($ticket->files as $index => $file)
+            @if ($ticket->images)
+                @foreach ($ticket->images as $index => $image)
                     <div class="flex flex-row">
-                        <img src={{ asset($file) }} alt="" class="w-40 h-40 mx-8" />
-                        <button type="button" id="button-{{ $index }}" onclick="selectImage(this)"
+                        <img id="{{ $image->id }}" src={{ asset($image->path) }} alt="" class="w-40 h-40 mx-8" />
+                        <button type="button" id="button-{{ $index }}" onclick="selectImage(this, {{$image->id}})"
                             class="w-4 h-4" style="z-index: 1; cursor: pointer;">
                             <i class="fa-solid fa-trash text-white"></i>
                         </button>
                     </div>
                 @endforeach
             @endif
-
         </div>
+        
+        <input type="hidden" name="deleted_image_ids" id="deleted_image_ids" value="">
+
 
         <x-forms.input name="files[]" label="Add New Files" type="file" multiple />
 
@@ -61,14 +63,23 @@
 </x-layout>
 
 <script>
-    function selectImage(button) {
-        console.log("click");
-        // Find the icon within the button
+    function selectImage(button, imageId) {
         const icon = button.querySelector('i');
 
-        // Toggle the color class
         icon.classList.toggle('text-white');
-        icon.classList.toggle('text-red-500'); // Change 'text-red-500' to whatever color you desire
-        button.parentElement.remove();
+        icon.classList.toggle('text-red-500');
+
+        const deletedImageIdsInput = document.getElementById('deleted_image_ids');
+        let deletedImageIds = deletedImageIdsInput.value ? deletedImageIdsInput.value.split(',') : [];
+        
+        if (!deletedImageIds.includes(imageId.toString())) {
+            deletedImageIds.push(imageId);
+        }
+        else {
+            deletedImageIds.pop(imageId);
+        }
+
+        deletedImageIdsInput.value = deletedImageIds.join(',');
     }
 </script>
+

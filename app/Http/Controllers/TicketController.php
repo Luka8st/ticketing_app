@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTicketRequest;
 use App\Mail\TicketClosed;
 use App\Mail\TicketOpened;
 use App\Models\Department;
+use App\Models\TicketImage;
 use App\Policies\TicketPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -32,21 +33,21 @@ class TicketController extends Controller
     public function indexNew()
     {
         // $tickets = Auth::user()->tickets;
-        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'new')->paginate(3);
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'new')->orderBy('updated_at', 'DESC')->paginate(3);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
     public function indexOpen()
     {
         // $tickets = Auth::user()->tickets;
-        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'open')->paginate(3);
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'open')->orderBy('updated_at', 'DESC')->paginate(3);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
     public function indexClosed()
     {
         // $tickets = Auth::user()->tickets;
-        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'closed')->paginate(3);
+        $tickets = Ticket::where('user_id', Auth::user()->id)->where('status', 'closed')->orderBy('updated_at', 'DESC')->paginate(3);
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
@@ -76,25 +77,28 @@ class TicketController extends Controller
 
         // dd( $request->file('files'));
         $files = $request->file('files');
-        $filePaths = [];
-        if($request->hasFile('files'))
-        {
-            $counter = 1;
-            foreach ($files as $file) {
-
-                $filePaths[] = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
-
-                $counter++;
-            }
-        }
 
         $department_id = Department::where('name', $attributes['department'])->first()->id;
 
         $attributes = Arr::except($attributes, ['department', 'files']);
         $attributes['department_id'] = $department_id;
-        $attributes['files'] = $filePaths;
 
-        Auth::user()->tickets()->create($attributes);
+        $ticket = Auth::user()->tickets()->create($attributes);
+
+        if($request->hasFile('files'))
+        {
+            $counter = 1;
+            foreach ($files as $file) {
+                $path = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
+
+                TicketImage::create([
+                    'ticket_id' => $ticket->id,
+                    'path' => $path,
+                ]);
+
+                $counter++;
+            }
+        }
 
         return redirect(route('client.homepage'));
     }
@@ -139,10 +143,21 @@ class TicketController extends Controller
         {
             $counter = 1;
             foreach ($files as $file) {
+                $path = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
 
-                $filePaths[] = Storage::putFileAs('uploaded_files', $file, time().'-image'.$counter.'.jpg');
+                TicketImage::create([
+                    'ticket_id' => $ticket->id,
+                    'path' => $path,
+                ]);
 
                 $counter++;
+            }
+        }
+
+        if($request->deleted_image_ids) {
+            foreach(explode(',', $request->deleted_image_ids) as $id) {
+                $image = TicketImage::find($id);
+                $image->delete();
             }
         }
 
@@ -150,15 +165,6 @@ class TicketController extends Controller
 
         $attributes = Arr::except($attributes, ['department', 'files']);
         $attributes['department_id'] = $department_id;
-
-        $existingFiles = $ticket->files;
-        
-        if ($ticket->files) {
-            $attributes['files'] = array_merge($ticket->files, $filePaths);
-        }
-        else {
-            $attributes['files'] = $filePaths;
-        }
 
         $attributes['updated_at'] = date('Y-m-d H:i:s');
 

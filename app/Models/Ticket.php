@@ -12,7 +12,6 @@ class Ticket extends Model
     protected $casts = [
         'opened_at' => 'datetime',
         'closed_at' => 'datetime',
-        'files' => 'array',
     ];
     protected $table = 'tickets';
 
@@ -29,5 +28,10 @@ class Ticket extends Model
     public function agent() 
     {
         return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(TicketImage::class);
     }
 }

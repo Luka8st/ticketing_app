@@ -6,12 +6,10 @@
             <br>
             Description: {{ $ticket->description }}
             <br>
-            @if ($ticket->files)
-                @foreach ($ticket->files as $file)
-                    {{-- <img src="{{ asset($file) }}" class="w-20 h-20"/> --}}
-
-                    {{-- <button onclick="window.open('{{ asset($file) }}', '_blank')">{{ $file }}</button> --}}
-                    <button onclick="window.open('{{ asset($file) }}', '_blank')"><img src="{{ asset($file) }}"
+            
+            @if ($ticket->images)
+                @foreach ($ticket->images as $image)
+                    <button onclick="window.open('{{ asset($image->path) }}', '_blank')"><img src="{{ asset($image->path) }}"
                             class="w-20 h-20" /></button>
                 @endforeach
             @endif
