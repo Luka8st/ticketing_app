@@ -180,6 +180,13 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $this->authorize('edit', $ticket);
+
+        if($ticket->images) {
+            foreach ($ticket->images as $image) {
+                $image->delete();
+            }
+        }
+    
         $ticket->delete();
 
         return redirect(route('client.homepage'));
