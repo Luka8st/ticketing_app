@@ -71,7 +71,7 @@ class TicketPolicy
 
     public function changeStatus(User $user, Ticket $ticket): bool
     {
-        return $ticket->agent == null || $ticket->agent->is($user);
+        return ($ticket->agent == null || $ticket->agent->is($user)) && $user->department == $ticket->department;
     }
 
     public function beEdited(User $user, Ticket $ticket): bool
