@@ -9,11 +9,6 @@
         <x-forms.input label="Password confirmation" name="password confirmation" type="password"/>
         <x-forms.input name="profile image" label="Profile image" type="file"/>
 
-        {{-- <x-forms.divider/>
-
-        <x-forms.input label="Employer name" name="employer"/>
-        <x-forms.input label="Employer logo" name="logo" type="file"/> --}}
-
         <x-forms.button>Create account</x-forms.button>
     </x-forms.form>
 </x-layout>

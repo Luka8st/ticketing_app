@@ -62,20 +62,6 @@
                 </div>
             @endauth
 
-            {{-- @auth
-                <div class="font-bold space-x-6">
-                    <form method="POST" action="/logout" class="max-h-12.4">
-                        @csrf
-                        @method('DELETE')
-
-                        <button
-                            class="group h-12.4 px-6 inline-block align-top max-w-xs mx-auto rounded-xl ring-1 ring-slate-900/5 shadow-lg space-y-3 bg-yellow-400/80 hover:bg-yellow-400/100 hover:ring-sky-500">
-                            Log Out
-                        </button>
-                    </form>
-                </div>
-            @endauth --}}
-
             @guest
                 <div class="space-x-6 font-bold">
                     <x-navbar-anchor href="/register">

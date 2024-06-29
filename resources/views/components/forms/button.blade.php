@@ -17,10 +17,6 @@
     onclick="'{{$type}}'=='button' ? discard('{{$old_title}}', '{{$old_description}}', '{{$old_department}}'):void(0)">{{ $slot }} 
 </button>
 
-{{-- <button {{ $attributes->merge(['class' => 'bg-blue-800/60 hover:bg-blue-800/100 ' . $defaults['class']]) }} type={{ $type }}
-    onclick="'{{$type}}'=='button' ? discard('{{$old_title}}', '{{$old_description}}', '{{$old_department}}'):void(0)">{{ $slot }} 
-</button> --}}
-
 <script>
     function discard(oldTitle, oldDescription, oldDepartment) {
         document.getElementById("title").value = oldTitle
