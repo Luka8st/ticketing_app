@@ -19,7 +19,7 @@ class ShowTickets extends Component
 
     public function toggleTableVisibility()
     {
-        $this->isOpen = !$this->isOpen; // Toggle table visibility
+        $this->isOpen = !$this->isOpen;
     }
 
     public function loadTickets()

@@ -19,15 +19,21 @@ class DepartmentSeeder extends Seeder
         // }
 
         $departments = ['Human Resources', 'Finance', 'Marketing', 'Sales', 'IT', 'Customer Service'];
-        $created = 0;
-        while ($created < 3) {
-            $index = rand(0, count($departments));
-            $dep = \App\Models\Department::factory()->create([
-                'name' => $departments[$index]
-            ]);
-            array_splice($departments, $index, 1);
+        // $created = 0;
+        // while ($created < 3) {
+        //     $index = rand(0, count($departments));
+        //     $dep = \App\Models\Department::factory()->create([
+        //         'name' => $departments[$index]
+        //     ]);
+        //     array_splice($departments, $index, 1);
 
-            $created++;
+        //     $created++;
+        // }
+
+        foreach ($departments as $dep) {
+            $dep = \App\Models\Department::factory()->create([
+                'name' => $dep
+            ]);
         }
     }
 }

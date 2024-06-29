@@ -30,13 +30,8 @@
         let filter = this.value.toLowerCase();
         let tickets = document.getElementsByClassName('ticket-card');
 
-        console.log("here, " + filter);
-        console.log("tickets - ", tickets)
-
         Array.from(tickets).forEach(function(ticket) {
             let ticketName = ticket.querySelector('.ticket-name').innerText.toLowerCase();
-            console.log("ticket - " + ticket);
-            console.log("name - " + ticketName)
             if (ticketName.includes(filter)) {
                 ticket.style.display = '';
             } else {
