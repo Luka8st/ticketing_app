@@ -29,13 +29,13 @@
                 <div class="relative inline-block text-left">
                     <div>
                         <x-navbar-anchor
-                           id="menu-button2" aria-expanded="true" aria-haspopup="true">
+                           id="menu-button-tickets" aria-expanded="true" aria-haspopup="true">
                             My tickets
                         </x-navbar-anchor>
                     </div>
 
                     <div class="hidden absolute text-gray-700 font-normal left-0 z-10 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        id="menu-items2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                        id="menu-items-tickets" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
                         tabindex="-1">
                         <div class="py-1" role="none">
                             <a class="px-2 block hover:bg-gray-200" href="{{route('client.tickets.index.new')}}">
@@ -65,7 +65,7 @@
                     <div>
                         <button type="button"
                             class="inline-flex justify-center rounded-md px-1 py-1 text-sm font-semibold text-gray-900 shadow-sm"
-                            id="menu-button" aria-expanded="true" aria-haspopup="true">
+                            id="menu-button-user" aria-expanded="true" aria-haspopup="true">
                             <img src={{ asset(Auth::user()->image_path) }} alt="" class="w-12 h-12 rounded-full" />
                             <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="hidden absolute text-gray-700 right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        id="menu-items" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                        id="menu-items-user" role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
                         tabindex="-1">
                         <div class="py-1" role="none">
                             <div class="px-4 py-2">
@@ -96,20 +96,6 @@
                     </div>
                 </div>
             @endauth
-
-            {{-- @auth
-                <div class="font-bold space-x-6">
-                    <form method="POST" action="/logout" class="max-h-12.4">
-                        @csrf
-                        @method('DELETE')
-
-                        <button
-                            class="group h-12.4 px-6 inline-block align-top max-w-xs mx-auto rounded-xl ring-1 ring-slate-900/5 shadow-lg space-y-3 hover:bg-white/10 hover:ring-sky-500">
-                            Log Out
-                        </button>
-                    </form>
-                </div>
-            @endauth --}}
 
             @guest
                 <div class="space-x-6 font-bold">
@@ -131,10 +117,9 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const menuButton = document.getElementById('menu-button');
-        const menuItems = document.getElementById('menu-items');
+        const menuButton = document.getElementById('menu-button-user');
+        const menuItems = document.getElementById('menu-items-user');
 
-        // Check if elements exist
         if (menuButton && menuItems) {
             menuButton.addEventListener('click', function() {
                 const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
@@ -142,7 +127,6 @@
                 menuItems.classList.toggle('hidden');
             });
 
-            // Close the dropdown if clicked outside
             document.addEventListener('click', function(event) {
                 if (!menuButton.contains(event.target) && !menuItems.contains(event.target)) {
                     menuItems.classList.add('hidden');
@@ -156,23 +140,20 @@
 
         
 
-        const menuButton2 = document.getElementById('menu-button2');
-        const menuItems2 = document.getElementById('menu-items2');
+        const menuButtonTickets = document.getElementById('menu-button-tickets');
+        const menuItemsTickets = document.getElementById('menu-items-tickets');
 
-        // Check if elements exist
-        if (menuButton2 && menuItems2) {
-            menuButton2.addEventListener('click', function() {
-                const isExpanded = menuButton2.getAttribute('aria-expanded') === 'true';
-                menuButton2.setAttribute('aria-expanded', !isExpanded);
-                menuItems2.classList.toggle('hidden');
+        if (menuButtonTickets && menuItemsTickets) {
+            menuButtonTickets.addEventListener('click', function() {
+                const isExpanded = menuButtonTickets.getAttribute('aria-expanded') === 'true';
+                menuButtonTickets.setAttribute('aria-expanded', !isExpanded);
+                menuItemsTickets.classList.toggle('hidden');
             });
 
-            // Close the dropdown if clicked outside
             document.addEventListener('click', function(event) {
-                console.log("dsadfvrsgdbfg");
-                if (!menuButton2.contains(event.target) && !menuItems2.contains(event.target)) {
-                    menuItems2.classList.add('hidden');
-                    menuButton2.setAttribute('aria-expanded', 'false');
+                if (!menuButtonTickets.contains(event.target) && !menuItemsTickets.contains(event.target)) {
+                    menuItemsTickets.classList.add('hidden');
+                    menuButtonTickets.setAttribute('aria-expanded', 'false');
                 }
             });
         } else {
