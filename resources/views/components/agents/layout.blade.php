@@ -13,25 +13,16 @@
         rel="stylesheet">
 </head>
 
-<body class="font-hanken-grotesk pb-20 bg-gray-200">
-
+<body class="font-hanken-grotesk pb-20 bg-gray-200 absolute w-full">
     <div class="">
         <nav
-            class="text-white flex justify-between items-center px-10 py-4 mx-auto border-b border-white/10 h-20 bg-red-800">
+            class="fixed z-10 w-full text-white flex justify-between items-center px-6 py-4 mx-auto border-b border-white/10 h-16 bg-red-800">
             <div class="">
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logoipsum-325.svg') }}" alt="" />
                 </a>
             </div>
 
-            <div class="space-x-6 font-bold">
-                <x-agents.navbar-anchor :href="route('agent.tickets.indexNew')">
-                    New Tickets
-                </x-agents.navbar-anchor>
-                <x-agents.navbar-anchor :href="route('agent.tickets.indexClosed')">
-                    My Closed Tickets
-                </x-agents.navbar-anchor>
-            </div>
 
 
             @auth
@@ -62,7 +53,7 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button class="block w-full px-4 py-2 text-left text-sm text-gray-700">
+                                <button class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-200/60">
                                     Log Out
                                 </button>
                             </form>
@@ -98,7 +89,8 @@
         </nav>
 
         <div class="px-10">
-            <main class="mt-10 mx-auto bg-white rounded-xl px-4 py-4 w-full">
+            <x-agents.sidebar/> 
+            <main class="mt-20 mx-auto bg-white rounded-xl px-4 py-4 w-4/5 absolute right-6">
                 {{ $slot }}
             </main>
         </div>

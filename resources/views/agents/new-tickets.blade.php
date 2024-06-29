@@ -11,10 +11,10 @@
     </h1>
      
      <div class="flex justify-center">
-        <input type="text" id="ticketSearch" placeholder="Search tickets by name" class="w-1/3 p-2 bg-gray-200/40 border border-gray-300 rounded">
+        <input type="text" id="ticketSearch" placeholder="Search tickets by name" class="w-1/3 mt-4 p-2 bg-gray-200/40 border border-gray-300 rounded">
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mt-8 overflow-auto max-h-screen">
+    <div class="grid grid-cols-3 gap-4 mt-8 overflow-auto max-h-screen">
         @foreach ($tickets as $ticket)
             <x-agents.ticket-card-wide :ticket="$ticket" type="new" card="ticket-card"/>
         @endforeach
